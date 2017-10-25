@@ -1,7 +1,7 @@
 
 // Load all required modules
 var express = require('express');
-var apiRoutes = require('./api/api');
+var apiRoute = require('./api/api');
 var bodyParser = require('body-parser')
 var app = express()
 
@@ -17,16 +17,21 @@ app.use(function(req, res, next) {
 });
 
 //Make Public directory accessible
-app.use(express.static(__dirname + '/public'));
+app.use('/iqwejioashdubqwnj', express.static(__dirname + '/public'));
 
 //Routing directories
-app.use('/api', apiRoutes);
+//app.use('/api', apiRoute);
 
 // Serve index.html for all Calls except API ones - Even when pages are not supported or errors occur
-app.get('*', function(req, res){
+app.get('/', function(req, res){
 	res.sendFile(__dirname + '/public/index.html');
 });
-Test
+
+//Error function
+app.use(function (req, res, next) {
+  res.status(404).send("I'm sorry, your princess is in another castle!")
+})
+
 var port = 80;
 app.listen(port, function() {
     console.log('Server runnning on Port: ' + port);
