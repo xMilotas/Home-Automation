@@ -27,8 +27,8 @@ router.post('/PowerPlugs', function(req, res, next){
 });
 
 function sendCodes(plugcode){
-	var command ="sudo ./codesend "+plugcode+" -� 0 -l 184";
-
+	var command ="sudo ./codesend "+plugcode+" -l 184";
+console.log(command);
 exec(command, function (error, stdout, stderr){
   if (error !== null) {
     console.log('exec error: ' + error);
@@ -40,17 +40,17 @@ exec(command, function (error, stdout, stderr){
 //TODO Use MongoDB for PowerOutletCodes
 function readCodes(outletID, outletStatus){
 	var powerOnMap = {
-		'1': '52312313',
-		'2': '23423424'
+		'1': '4478259',
+		'2': '4478403'
 	}
 
 	var powerOffMap = {
-		'1': '23123132',
-		'2': '12313223'
+		'1': '4478268',
+		'2': '4478412'
 	}
 
-	if (outletStatus = 0) plugcode = powerOnMap[outletID];
-	else plugcode = powerOffMap[outletID];
+	if (outletStatus = 0) plugcode = powerOffMap[outletID];
+	if (outletStatus = 1) plugcode = powerOnMap[outletID];
 
 	return plugcode;
 }

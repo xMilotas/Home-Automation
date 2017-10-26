@@ -32,7 +32,7 @@ app.use(function (req, res, next) {
   res.status(404).send("I'm sorry, your princess is in another castle!")
 })
 
-var port = 80;
+var port = 8080;
 app.listen(port, function() {
     console.log('Server runnning on Port: ' + port);
 });
