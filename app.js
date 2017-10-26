@@ -20,7 +20,7 @@ app.use(function(req, res, next) {
 app.use('/iqwejioashdubqwnj', express.static(__dirname + '/public'));
 
 //Routing directories
-//app.use('/api', apiRoute);
+app.use('/api', apiRoute);
 
 // Serve index.html for all Calls except API ones - Even when pages are not supported or errors occur
 app.get('/', function(req, res){

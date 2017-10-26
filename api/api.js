@@ -4,29 +4,32 @@ var url = require('url');
 const { exec } = require('child_process');
 module.exports = router;
 
-router.post('PowerPlugs', function(req, res, next){
+
+
+
+
+router.post('/PowerPlugs', function(req, res, next){
 	try{
+		console.log(req.body);
 		var reqObj= req.body;
-		var outletID = req.Obj.outletID;
-		var outletStatus = req.Obj.outletStatus;
-		
+		var outletID = reqObj.outletID;
+		var outletStatus = reqObj.outletStatus;
+
 		console.log("ID: "+outletID+" Status: "+outletStatus);
-		
-		res.send(sendCodes(readCodes(outletID, outletStatus));
-		
+
+		res.send(sendCodes(readCodes(outletID, outletStatus)));
+
 	} catch(ex)
 	{
-		console.error("Internal error:"+ex):
+		console.error("Internal error:"+ex);
 		return next(ex);
 	}
-}
+});
 
 function sendCodes(plugcode){
-	var command ="sudo ./codesend "+plugcode+" -ü 0 -l 184"; 
-	
+	var command ="sudo ./codesend "+plugcode+" -ï¿½ 0 -l 184";
+
 exec(command, function (error, stdout, stderr){
-  sys.print('stdout: ' + stdout);
-  sys.print('stderr: ' + stderr);
   if (error !== null) {
     console.log('exec error: ' + error);
   }
@@ -37,17 +40,17 @@ exec(command, function (error, stdout, stderr){
 //TODO Use MongoDB for PowerOutletCodes
 function readCodes(outletID, outletStatus){
 	var powerOnMap = {
-		'1': '52312313'
+		'1': '52312313',
 		'2': '23423424'
 	}
-	
+
 	var powerOffMap = {
-		'1': '23123132'
+		'1': '23123132',
 		'2': '12313223'
 	}
-	
+
 	if (outletStatus = 0) plugcode = powerOnMap[outletID];
 	else plugcode = powerOffMap[outletID];
-	
+
 	return plugcode;
 }

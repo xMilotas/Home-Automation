@@ -94,8 +94,8 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script>
   var toggleOutlet = function(buttonClicked) {
-      $.post('/', {
-              outletId: buttonClicked.attr('data-outletId'),
+      $.post('/api/PowerPlugs', {
+              outletID: buttonClicked.attr('data-outletId'),
               outletStatus: buttonClicked.attr('data-outletStatus')
           },
           function(data, status) {
