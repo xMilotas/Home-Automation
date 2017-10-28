@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var url = require('url');
-const exec = require('child_process');
+const {
+  exec
+} = require('child_process');
 module.exports = router;
 
 
@@ -12,14 +14,16 @@ router.post('/PowerPlugs', function(req, res, next) {
     var outletID = reqObj.outletID;
     var outletStatus = reqObj.outletStatus;
     if (outletID == '6') {
-      for (var i = 1; i < 5; i++) {
-        setTimeout(function() {
+      var i = 1;
+      var repeat = setInterval(function () {
+          console.log(i);
           res.send(sendCodes(readCodes(i, outletStatus)));
-        }, 500);
-      }
-    }
+          i++;
+          if (i == 5) clearInterval(repeat);
+      }, 1000);
 
-    res.send(sendCodes(readCodes(outletID, outletStatus)));
+      }
+     else res.send(sendCodes(readCodes(outletID, outletStatus)));
   } catch (ex) {
     console.error("Internal error:" + ex);
     return next(ex);
@@ -27,13 +31,13 @@ router.post('/PowerPlugs', function(req, res, next) {
 });
 
 function sendCodes(plugcode) {
-  var command = "sudo ./codesend " + plugcode + " -l 184";
+  var command = "sudo ./codesend " + plugcode + " -l 183";
+  console.log(command);
   exec(command, function(error, stdout, stderr) {
     if (error !== null) {
       console.log('exec error: ' + error);
     }
   });
-  return ('Success');
 }
 
 //TODO Use MongoDB for PowerOutletCodes
