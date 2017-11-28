@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Light Control</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+  <div id="wrapper">
+    <section>
+        <h4>Wohnzimmer große Lampe </h4>
+        <ul class="actions">
+          <li><a class="button toggleOutlet" outletId="1" outletStatus="1">An</a></li>
+          <li><a class="button toggleOutlet" outletId="1" outletStatus="0">Aus</a></li>
+        </ul>
+        <h4> Wohnzimmer kleine Lampe </h4>
+        <ul class="actions">
+          <li><a class="button toggleOutlet" outletId="2" outletStatus="1">An</a></li>
+          <li><a class="button toggleOutlet" outletId="2" outletStatus="0">Aus</a></li>
+        </ul>
+        <h4> Schlafzimmer Lampen </h4>
+        <ul class="actions">
+          <li><a class="button toggleOutlet" outletId="3" outletStatus="1">An</a></li>
+          <li><a class="button toggleOutlet" outletId="3" outletStatus="0">Aus</a></li>
+        </ul>
+        <h4> Anlage </h4>
+        <ul class="actions">
+          <li><a class="button toggleOutlet" outletId="4" outletStatus="1">An</a></li>
+          <li><a class="button toggleOutlet" outletId="4" outletStatus="0">Aus</a></li>
+        </ul>
+        <h4> PC </h4>
+        <ul class="actions">
+          <li><a class="button toggleOutlet" outletId="5" outletStatus="1">An</a></li>
+          <li><a class="button toggleOutlet" outletId="5" outletStatus="0">Aus</a></li>
+        </ul>
+        <h4> Alle </h4>
+        <ul class="actions">
+          <li><a class="button toggleOutlet" outletId="6" outletStatus="1">An</a></li>
+          <li><a class="button toggleOutlet" outletId="6" outletStatus="0">Aus</a></li>
+        </ul>
+  </section>
+    <!-- Footer -->
+      <footer id="footer">
+      </footer>
+  </div>
+    <!-- BG -->
+      <div id="bg"></div>
+  </body>
+  <!-- Scripts -->
+    <script src="js/jquery.min.js"></script>
+    <script>
+    var toggleOutlet = function(buttonClicked) {
+      console.log(buttonClicked.attr('outletID'));
+      console.log(buttonClicked.attr('outletStatus'));
+          $.post('/api/PowerPlugs', {
+                  outletID: buttonClicked.attr('outletId'),
+                  outletStatus: buttonClicked.attr('outletStatus')
+              },
+              function(data, status) {
+                  //alert('Outlet toggled!');
+              });
+      };
+
+      $(function() {
+          $('.toggleOutlet').click(function() {
+              toggleOutlet($(this));
+          });
+      });
+      </script>
+    <script src="js/skel.min.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/main.js"></script>
+</html>
