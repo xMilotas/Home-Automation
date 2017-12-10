@@ -1,10 +1,36 @@
 var express = require('express');
 var router = express.Router();
 var url = require('url');
-const {
-  exec
-} = require('child_process');
+const {exec} = require('child_process');
 module.exports = router;
+
+var spotifyActive = 1;
+var bundesligaActive = 1;
+var timeActive = 1;
+var weatherActive = 1;
+
+router.post('/Settings', function(req, res, next){
+  var widget = req.body.widget;
+  var status = req.body.status;
+  switch (widget) {
+    case "Spotify":
+      spotifyActive = req.body.status;
+      break;
+    case "Bundesliga":
+      bundesligaActive = req.body.status;
+      break;
+    case "Time":
+      timeActive = req.body.status;
+      break;
+    case "Weather":
+      weatherActive = req.body.status;
+      break;
+  }
+});
+
+router.get('/Settings', function(req, res, next){
+  res.send('{ Spotify: '+spotifyActive +", Bundesliga: "+bundesligaActive+"}");
+});
 
 
 router.post('/PowerPlugs', function(req, res, next) {
