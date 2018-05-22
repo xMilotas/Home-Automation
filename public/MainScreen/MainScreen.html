@@ -11,11 +11,11 @@
   <body>
     <div class="top left">
       <div class="container">
-      <div class="login-container hidden" id="js-login-container">
-        <button class="btn btn--login" id="js-btn-login">Login with Spotify</button>
+        <div class="login-container hidden" id="js-login-container">
+          <button class="btn btn--login" id="js-btn-login">Login with Spotify</button>
+        </div>
+        <div class="main-container hidden" id="js-main-container"></div>
       </div>
-      <div class="main-container hidden" id="js-main-container"></div>
-  </div>
     </div>
 
     <div class="top right">
@@ -23,7 +23,9 @@
   		<div class="temp"></div>
   		<div class="forecast small dimmed"></div>
   	</div>
-
+    <div class="dimmed">
+      <iframe id="ytplayer" type="text/html" width="1920" height="1080"src="https://www.youtube.com/embed/bmGsQkLb4yg?autoplay=1&controls=0&disablekb=1&rel=0&showinfo=0&iv_load_policy=3" frameborder="0" allowfullscreen></iframe>
+    </div>
     <div class="bottom left">
   		<div class="date small dimmed"></div>
   		<div class="time"></div>
@@ -32,14 +34,10 @@
     <div class="bottom right">
       <div id="fblwidget_table"></div>
     </div>
-    <script src="js/jquery.js"></script>
+    <script src="../js/jquery.min.js"></script>
     <script src="js/config.js"></script>
-    <script src="js/main.js"></script>
     <script src="js/moment-with-langs.min.js"></script>
     <script src="https://spotify-player.herokuapp.com/spotify-player.js"></script>
-    <script src="js/time.js"></script>
-    <script src="js/Spotify.js"></script>
-    <script src="js/Weather.js"></script>
-    <script src="js/bundesliga.js"></script>
+    <script src="js/main.js"></script>
   </body>
 </html>

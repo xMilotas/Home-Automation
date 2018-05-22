@@ -17,7 +17,7 @@ app.use(function(req, res, next) {
 });
 
 //Make Public directory accessible
-app.use('/iqwejioashdubqwnj', express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
 
 //Routing directories
 app.use('/api', apiRoute);
@@ -32,7 +32,7 @@ app.use(function (req, res, next) {
   res.status(404).send("I'm sorry, your princess is in another castle!")
 })
 
-var port = 8080;
+var port = 80;
 app.listen(port, function() {
     console.log('Server runnning on Port: ' + port);
 });

@@ -4,7 +4,7 @@ body, html {
 	margin: 0px;
 	width:100%;
 	height: 100%;
-
+	overflow: hidden;
 
 	font-family: "HelveticaNeue-Light";
 	letter-spacing: -2px;
@@ -12,63 +12,26 @@ body, html {
 	font-size: 75px;
 	 -webkit-font-smoothing: antialiased;
 }
-.wi {
-	line-height: 75px;
 
-}
-.news-datetime{
-  left: 50px;
-}
-
-.IndoorTemp{
-	text-align: right;
-	font-size: 20px;
-	line-height: 20px;
-	font-family: "HelveticaNeue-Medium";
-}
-
-.news-content
-{
-	position: absolute;
-	left: 50px;
-	right: 50px;
-	bottom: 20px;
-	letter-spacing: 0px;
-}
-
-.newstimestamp {
-	font-size: 25px;
-}
-
-.newshead {
-	position: relative;
-	bottom: 5px;
-	text-align: center;
-	font-size: 32px;
-	}
-
-.newsdesc {
-	position: relative;
-	bottom: 5px;
-	text-align: center;
-	font-size: 25px;
-}
 .top
 {
 	position: absolute;
 	top: 30px;
+	z-index: 1;
 }
 
 .left
 {
 	position: absolute;
 	left: 30px;
+	z-index: 1;
 }
 .right
 {
 	position: absolute;
 	right: 30px;
 	text-align: right;
+	z-index: 1;
 }
 
 .center-top
@@ -171,6 +134,7 @@ body, html {
 .dimmed
 {
 	color: #aaa;
+	opacity: 0.9
 }
 
 .light
