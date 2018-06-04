@@ -35,7 +35,6 @@ router.get('/Settings', function(req, res, next){
 
 router.post('/PowerPlugs', function(req, res, next) {
   try {
-    console.log(req.body);
     var reqObj = req.body;
     var outletID = reqObj.outletID;
     var outletStatus = reqObj.outletStatus;
