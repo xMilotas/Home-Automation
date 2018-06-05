@@ -29,9 +29,9 @@
         <h4> Lüfter </h4>
         <ul class="actions">
           <a class="button toggleOutlet" outletId="4" outletStatus="1">An</a>
-          <a class="button toggleOutlet" outletId="4" outletStatus="0" time="5">5 Minuten</a>
-          <a class="button toggleOutlet" outletId="4" outletStatus="0" time= "10">10 Minuten</a>
-          <li> <a class="button toggleOutlet" outletId="4" outletStatus="0">Aus</a> </li>
+          <a id= "5minutetimer" class="button toggleOutlet" outletId="4" outletStatus="1" time="5">5 Minuten</a>
+          <a id= "10minutetimer" class="button toggleOutlet 10minutetimer" outletId="4" outletStatus="1" time= "10">10 Minuten</a>
+          <li> <a class="button toggleOutlet" outletId="4" outletStatus="0" timerOff="1">Aus</a> </li>
         </ul>
         <h4> PC </h4>
         <ul class="actions">
@@ -53,34 +53,53 @@
   </body>
   <!-- Scripts -->
     <script src="js/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/robbmj/simple-js-countdown-timer/master/countdowntimer.js"> </script>
     <script>
+    var timerActive = false;
+
     var toggleOutlet = function(buttonClicked) {
-      if (buttonClicked.attr('time')){
-          setTimeout(function () {
-            $.post('/api/PowerPlugs', {
-                    outletID: buttonClicked.attr('outletId'),
-                    outletStatus: buttonClicked.attr('outletStatus')
-                },
-                function(data, status) {
-                    //alert('Outlet toggled!');
-                });
-        },Number(buttonClicked.attr('time'))*60000)
-      }
-      else {
-          $.post('/api/PowerPlugs', {
-                  outletID: buttonClicked.attr('outletId'),
-                  outletStatus: buttonClicked.attr('outletStatus')
-              },
-              function(data, status) {
-                  //alert('Outlet toggled!');
-              });
-      };
+      sendRequest(buttonClicked.attr('outletId'), buttonClicked.attr('outletStatus'));
+      if (buttonClicked.attr('time')) startTimers(buttonClicked.attr('time'), buttonClicked);
     }
+
+    function sendRequest(id, status){
+      $.post('/api/PowerPlugs', {
+              outletID: id,
+              outletStatus: status
+          });
+    }
+      //Time Handling
+      function startTimers(timeinterval, buttonClicked) {
+        if (!timerActive) {
+          var display = document.getElementById(timeinterval + 'minutetimer'),
+            timer = new CountDownTimer(timeinterval * 60),
+            timeObj = CountDownTimer.parse(timeinterval * 60);
+          timerActive = true;
+          var timer2 = setTimeout(function() {
+            sendRequest(buttonClicked.attr('outletId'), 0)
+          }, Number(buttonClicked.attr('time')) * 60000);
+          timer.start();
+          timer.onTick(format);
+        }
+
+      function format(minutes, seconds) {
+        if (this.expired()){
+          timerActive = false;
+          display.innerHTML = timeinterval + " Minuten";
+        }
+        else{
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        display.innerHTML = minutes + ':' + seconds;
+      }
+      }
+}
       $(function() {
           $('.toggleOutlet').click(function() {
-              toggleOutlet($(this));
-          });
-      });
+              toggleOutlet($(this))
+          })
+      })
+
       </script>
     <script src="js/skel.min.js"></script>
     <script src="js/main.js"></script>
