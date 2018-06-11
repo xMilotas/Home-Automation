@@ -53,6 +53,7 @@ router.post('/PowerPlugs', function(req, res, next) {
              timerActive = 1;
              res.send(sendCodes(readCodes(outletID, outletStatus)));
              var timer2 = setTimeout(function() {
+             var i = 1;
              timerActive = 0;
              var repeat = setInterval(function () {
                  sendCodes(readCodes(outletID, 0));
@@ -74,7 +75,6 @@ router.post('/PowerPlugs', function(req, res, next) {
 
 function sendCodes(plugcode) {
   var command = "sudo ./codesend " + plugcode + " -l 183";
-  console.log("Sending codes" + command)
   exec(command, function(error, stdout, stderr) {
     if (error !== null) {
       console.log('exec error: ' + error);
