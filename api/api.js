@@ -48,7 +48,7 @@ router.post('/PowerPlugs', function(req, res, next) {
         }, 1000);
       }
      else {
-       if (req.body.timer){
+       if (req.body.timer != "false"){
          console.log("Timer req")
           if (timerActive == 0){
              timerActive = 1;
