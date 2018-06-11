@@ -56,7 +56,7 @@ router.post('/PowerPlugs', function(req, res, next) {
              var timer2 = setTimeout(function() {
              console.log("Timer aus")
              sendCodes(readCodes(outletID, 0));
-            }, Number(req.body.time) * 60000);#
+            }, Number(req.body.time) * 60000);
             }
           }
        }
