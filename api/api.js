@@ -48,7 +48,8 @@ router.post('/PowerPlugs', function(req, res, next) {
         }, 1000);
       }
      else {
-       if (req.body.time){
+       if (req.body.timer){
+         console.log("Timer req")
           if (timerActive == 0){
              timerActive = 1;
              console.log("Timer aktiv schalten..")
@@ -56,7 +57,7 @@ router.post('/PowerPlugs', function(req, res, next) {
              var timer2 = setTimeout(function() {
              console.log("Timer aus")
              sendCodes(readCodes(outletID, 0));
-            }, Number(req.body.time) * 60000);
+           }, Number(req.body.timer) * 60000);
             }
           }
        else {
