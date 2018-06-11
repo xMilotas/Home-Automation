@@ -58,10 +58,10 @@
     var timerActive = false;
 
     var toggleOutlet = function(buttonClicked) {
-      sendRequest(buttonClicked.attr('outletId'), buttonClicked.attr('outletStatus'), false);
       if (buttonClicked.attr('time'))
       sendRequest(buttonClicked.attr('outletId'), buttonClicked.attr('outletStatus'), buttonClicked.attr('time'));
       startTimers(buttonClicked.attr('time'), buttonClicked);
+      else sendRequest(buttonClicked.attr('outletId'), buttonClicked.attr('outletStatus'), false);
     }
 
     function sendRequest(id, status, time){
