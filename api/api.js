@@ -56,6 +56,7 @@ router.post('/PowerPlugs', function(req, res, next) {
              res.send(sendCodes(readCodes(outletID, outletStatus)));
              var timer2 = setTimeout(function() {
              console.log("Timer aus")
+             timerActive = 0;
              sendCodes(readCodes(outletID, 0));
            }, Number(req.body.timer) * 60000);
             }
@@ -72,6 +73,7 @@ router.post('/PowerPlugs', function(req, res, next) {
 
 function sendCodes(plugcode) {
   var command = "sudo ./codesend " + plugcode + " -l 183";
+  console.log("Sending codes" + command)
   exec(command, function(error, stdout, stderr) {
     if (error !== null) {
       console.log('exec error: ' + error);
