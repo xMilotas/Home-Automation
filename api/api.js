@@ -8,6 +8,7 @@ var spotifyActive = 1;
 var bundesligaActive = 1;
 var timeActive = 1;
 var weatherActive = 1;
+var timerActive = 0;
 
 router.post('/Settings', function(req, res, next){
   var widget = req.body.widget;
@@ -48,9 +49,16 @@ router.post('/PowerPlugs', function(req, res, next) {
       }
      else {
        if (req.body.time){
-         var timer2 = setTimeout(function() {
-         res.send(sendCodes(readCodes(outletID, outletStatus))); 
-         }, Number(req.body.time) * 60000);
+          if (timerActive == 0){
+             timerActive = 1;
+             console.log("Timer aktiv schalten..")
+             res.send(sendCodes(readCodes(outletID, outletStatus)));
+             var timer2 = setTimeout(function() {
+             console.log("Timer aus")
+             sendCodes(readCodes(outletID, 0)));
+            }, Number(req.body.time) * 60000);#
+            }
+          }
        }
        else {
        res.send(sendCodes(readCodes(outletID, outletStatus)));
