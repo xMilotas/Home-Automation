@@ -49,15 +49,16 @@ router.post('/PowerPlugs', function(req, res, next) {
       }
      else {
        if (req.body.timer != "false"){
-         console.log("Timer req")
           if (timerActive == 0){
              timerActive = 1;
-             console.log("Timer aktiv schalten..")
              res.send(sendCodes(readCodes(outletID, outletStatus)));
              var timer2 = setTimeout(function() {
-             console.log("Timer aus")
              timerActive = 0;
-             sendCodes(readCodes(outletID, 0));
+             var repeat = setInterval(function () {
+                 sendCodes(readCodes(outletID, 0));
+                 i++;
+                 if (i == 6) clearInterval(repeat);
+               }, 1000);
            }, Number(req.body.timer) * 60000);
             }
           }
