@@ -59,7 +59,6 @@ router.post('/PowerPlugs', function(req, res, next) {
             }, Number(req.body.time) * 60000);
             }
           }
-       }
        else {
        res.send(sendCodes(readCodes(outletID, outletStatus)));
      }
