@@ -67,7 +67,7 @@
     function sendRequest(id, status, time){
       $.post('/api/PowerPlugs', {
               outletID: id,
-              outletStatus: status
+              outletStatus: status,
               timer: time
           });
     }
