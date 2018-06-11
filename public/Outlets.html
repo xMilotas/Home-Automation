@@ -58,14 +58,17 @@
     var timerActive = false;
 
     var toggleOutlet = function(buttonClicked) {
-      sendRequest(buttonClicked.attr('outletId'), buttonClicked.attr('outletStatus'));
-      if (buttonClicked.attr('time')) startTimers(buttonClicked.attr('time'), buttonClicked);
+      sendRequest(buttonClicked.attr('outletId'), buttonClicked.attr('outletStatus'), false);
+      if (buttonClicked.attr('time'))
+      sendRequest(buttonClicked.attr('outletId'), buttonClicked.attr('outletStatus'), buttonClicked.attr('time'));
+      startTimers(buttonClicked.attr('time'), buttonClicked);
     }
 
-    function sendRequest(id, status){
+    function sendRequest(id, status, time){
       $.post('/api/PowerPlugs', {
               outletID: id,
               outletStatus: status
+              timer: time
           });
     }
       //Time Handling
@@ -74,12 +77,9 @@
           var display = document.getElementById(timeinterval + 'minutetimer'),
             timer = new CountDownTimer(timeinterval * 60),
             timeObj = CountDownTimer.parse(timeinterval * 60);
-          timerActive = true;
-          var timer2 = setTimeout(function() {
-            sendRequest(buttonClicked.attr('outletId'), 0)
-          }, Number(buttonClicked.attr('time')) * 60000);
-          timer.start();
-          timer.onTick(format);
+            timerActive = true;
+            timer.start();
+            timer.onTick(format);
         }
 
       function format(minutes, seconds) {

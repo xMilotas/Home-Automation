@@ -44,10 +44,18 @@ router.post('/PowerPlugs', function(req, res, next) {
           res.send(sendCodes(readCodes(i, outletStatus)));
           i++;
           if (i == 6) clearInterval(repeat);
-      }, 1000);
-
+        }, 1000);
       }
-     else res.send(sendCodes(readCodes(outletID, outletStatus)));
+     else {
+       if (req.body.time){
+         var timer2 = setTimeout(function() {
+         res.send(sendCodes(readCodes(outletID, outletStatus))); 
+         }, Number(req.body.time) * 60000);
+       }
+       else {
+       res.send(sendCodes(readCodes(outletID, outletStatus)));
+     }
+     }
   } catch (ex) {
     console.error("Internal error:" + ex);
     return next(ex);
