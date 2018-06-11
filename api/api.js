@@ -55,7 +55,7 @@ router.post('/PowerPlugs', function(req, res, next) {
              res.send(sendCodes(readCodes(outletID, outletStatus)));
              var timer2 = setTimeout(function() {
              console.log("Timer aus")
-             sendCodes(readCodes(outletID, 0)));
+             sendCodes(readCodes(outletID, 0));
             }, Number(req.body.time) * 60000);#
             }
           }
