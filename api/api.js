@@ -79,8 +79,8 @@ function sendCodes(plugcode) {
       }
     })
     i++;
-    if (i == 10) clearInterval(repeat);
-  }, 350);
+    if (i == 5) clearInterval(repeat);
+  }, 250);
 }
 
 function readCodes(outletID, outletStatus) {
