@@ -46,7 +46,7 @@ router.post('/PowerPlugs', function(req, res, next) {
       var repeat = setInterval(function () {
         sendCodes(readCodes(i, outletStatus))
         i++;
-        if (i == 5) clearInterval(repeat);
+        if (i == 6) clearInterval(repeat);
       }, 1000);
     }
     else {
