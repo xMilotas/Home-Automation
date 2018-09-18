@@ -75,7 +75,6 @@ function sendCodes(plugcode) {
   var command = "sudo ./codesend " + plugcode + " -l 185"
   var i = 0
   var repeat = setInterval(function () {
-    console.log("Sending code "+command)
     exec(command, function(error, stdout, stderr) {
       if (error !== null) {
         console.log('exec error: ' + error)
