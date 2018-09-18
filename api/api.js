@@ -39,33 +39,28 @@ router.post('/PowerPlugs', function(req, res, next) {
     var reqObj = req.body;
     var outletID = reqObj.outletID;
     var outletStatus = reqObj.outletStatus;
+
+    // Turn off everything
     if (outletID == '6') {
-      var i = 1;
-      var repeat = setInterval(function () {
-          res.send(sendCodes(readCodes(i, outletStatus)));
-          i++;
-          if (i == 6) clearInterval(repeat);
-        }, 1000);
+      for (var i = 1; i < 6; i++) {
+          sendCodes(readCodes(i, outletStatus));
       }
-     else {
+    }
+    else {
+      // Timer handling
        if (req.body.timer != "false"){
           if (timerActive == 0){
              timerActive = 1;
              res.send(sendCodes(readCodes(outletID, outletStatus)));
              var timer2 = setTimeout(function() {
-             var i = 1;
              timerActive = 0;
-             var repeat = setInterval(function () {
-                 sendCodes(readCodes(outletID, 0));
-                 i++;
-                 if (i == 6) clearInterval(repeat);
-               }, 1000);
+             sendCodes(readCodes(outletID, 0));
            }, Number(req.body.timer) * 60000);
             }
           }
        else {
        res.send(sendCodes(readCodes(outletID, outletStatus)));
-     }
+      }
      }
   } catch (ex) {
     console.error("Internal error:" + ex);
@@ -74,15 +69,20 @@ router.post('/PowerPlugs', function(req, res, next) {
 });
 
 function sendCodes(plugcode) {
-  var command = "sudo ./codesend " + plugcode + " -l 183";
-  exec(command, function(error, stdout, stderr) {
-    if (error !== null) {
-      console.log('exec error: ' + error);
-    }
-  });
+  var command = "sudo ./codesend " + plugcode + " -l 185"
+  var i = 1
+  var repeat = setInterval(function () {
+    console.log("Sending code "+command)
+    exec(command, function(error, stdout, stderr) {
+      if (error !== null) {
+        console.log('exec error: ' + error)
+      }
+    })
+    i++;
+    if (i == 10) clearInterval(repeat);
+  }, 750);
 }
 
-//TODO Use MongoDB for PowerOutletCodes
 function readCodes(outletID, outletStatus) {
   var powerOnMap = {
     '1': '4478259',
