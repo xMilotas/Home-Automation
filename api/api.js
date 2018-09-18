@@ -80,7 +80,7 @@ function sendCodes(plugcode) {
     })
     i++;
     if (i == 10) clearInterval(repeat);
-  }, 750);
+  }, 350);
 }
 
 function readCodes(outletID, outletStatus) {
