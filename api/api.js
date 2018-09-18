@@ -40,11 +40,15 @@ router.post('/PowerPlugs', function(req, res, next) {
     var outletID = reqObj.outletID;
     var outletStatus = reqObj.outletStatus;
 
-    // Turn off everything
+    // Turn on/off everything
     if (outletID == '6') {
-      for (var i = 1; i < 6; i++) {
-          sendCodes(readCodes(i, outletStatus));
-      }
+      var i = 1
+      var repeat = setInterval(function () {
+        sendCodes(readCodes(i, outletStatus))
+      })
+        i++;
+        if (i == 5) clearInterval(repeat);
+      }, 600);
     }
     else {
       // Timer handling
