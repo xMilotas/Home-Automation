@@ -70,7 +70,7 @@ router.post('/PowerPlugs', function(req, res, next) {
 
 function sendCodes(plugcode) {
   var command = "sudo ./codesend " + plugcode + " -l 185"
-  var i = 1
+  var i = 0
   var repeat = setInterval(function () {
     console.log("Sending code "+command)
     exec(command, function(error, stdout, stderr) {
@@ -80,7 +80,7 @@ function sendCodes(plugcode) {
     })
     i++;
     if (i == 5) clearInterval(repeat);
-  }, 250);
+  }, 200);
 }
 
 function readCodes(outletID, outletStatus) {
