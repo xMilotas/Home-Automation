@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "*",
-    "express": "*"
+    "express": "*",
+    "qrcode-terminal": "*",
+    "whatsapp-web.js": "*"
   }
 }

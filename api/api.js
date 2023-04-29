@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var url = require('url');
 const {exec} = require('child_process');
+const client = require('./whatsapp_client')
+
+
 module.exports = router;
 
 var spotifyActive = 1;
@@ -31,6 +34,12 @@ router.post('/Settings', function(req, res, next){
 
 router.get('/Settings', function(req, res, next){
   res.send('{ Spotify: '+spotifyActive +", Bundesliga: "+bundesligaActive+"}");
+});
+
+// Send notification message to private group chat 
+router.get('/Notify', function(req, res, next){
+  client.sendMessage("120363147865391832@g.us", 
+  req.query.msg).then(e => res.send('Success'))
 });
 
 
