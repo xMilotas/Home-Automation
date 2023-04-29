@@ -24,7 +24,7 @@ app.use('/api', apiRoute);
 
 // Serve index.html for all Calls except API ones - Even when pages are not supported or errors occur
 app.get('/', function(req, res){
-	res.sendFile(__dirname + '/public/index.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
 
 //Error function
@@ -32,7 +32,7 @@ app.use(function (req, res, next) {
   res.status(404).send("I'm sorry, your princess is in another castle!")
 })
 
-var port = 80;
+var port = 8080;
 app.listen(port, function() {
-    console.log('Server runnning on Port: ' + port);
+  console.log('Server runnning on Port: ' + port);
 });

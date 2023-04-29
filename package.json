@@ -12,6 +12,7 @@
     "body-parser": "*",
     "express": "*",
     "qrcode-terminal": "*",
-    "whatsapp-web.js": "*"
+    "whatsapp-web.js": "*",
+    "node-schedule": "*"
   }
 }

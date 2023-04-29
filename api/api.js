@@ -45,6 +45,7 @@ router.get('/Notify', function(req, res, next){
 
 router.post('/PowerPlugs', function(req, res, next) {
   try {
+    console.log(req.body);
     var reqObj = req.body;
     var outletID = reqObj.outletID;
     var outletStatus = reqObj.outletStatus;
@@ -55,8 +56,9 @@ router.post('/PowerPlugs', function(req, res, next) {
       var repeat = setInterval(function () {
         sendCodes(readCodes(i, outletStatus))
         i++;
-        if (i == 6) clearInterval(repeat);
+        if (i == 7) clearInterval(repeat);
       }, 1000);
+      res.send("Success");
     }
     else {
       // Timer handling
@@ -82,6 +84,8 @@ router.post('/PowerPlugs', function(req, res, next) {
 
 function sendCodes(plugcode) {
   var command = "sudo ./codesend " + plugcode + " -l 185"
+  if (plugcode == "5575761" || plugcode == "5575764") comand = "sudo ./codesend " + plugcode + " -l 301"
+  console.log(command)
   var i = 0
   var repeat = setInterval(function () {
     exec(command, function(error, stdout, stderr) {
@@ -94,23 +98,25 @@ function sendCodes(plugcode) {
   }, 100);
 }
 
-function readCodes(outletID, outletStatus) {
-  var powerOnMap = {
-    '1': '4478259',
-    '2': '4478403',
-    '3': '4478723',
-    '4': '4480259',
-    '5': '4486403'
+  function readCodes(outletID, outletStatus) {
+    var powerOnMap = {
+      '1': '4478259',
+      '2': '4478403',
+      '3': '4478723',
+      '4': '5575761',
+      '5': '5571921',
+      '6': '5575953',
+    }
+  
+    var powerOffMap = {
+      '1': '4478268',
+      '2': '4478412',
+      '3': '4478732',
+      '4': '5575764',
+      '5': '5571924',
+      '6': '5575956',
+    }
+    plugcode = powerOffMap[outletID];
+    if (outletStatus == 1) plugcode = powerOnMap[outletID];
+    return plugcode;
   }
-
-  var powerOffMap = {
-    '1': '4478268',
-    '2': '4478412',
-    '3': '4478732',
-    '4': '4480268',
-    '5': '4486412'
-  }
-  plugcode = powerOffMap[outletID];
-  if (outletStatus == 1) plugcode = powerOnMap[outletID];
-  return plugcode;
-}
