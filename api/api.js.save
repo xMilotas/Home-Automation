@@ -4,9 +4,8 @@ var url = require('url');
 const {exec} = require('child_process');
 const client = require('./whatsapp_client')
 
-// require routes
-var tpRoutes = require('./tp/')
-router.use('/tp', tpRoutes)
+
+module.exports = router;
 
 var spotifyActive = 1;
 var bundesligaActive = 1;
@@ -39,16 +38,11 @@ router.get('/Settings', function(req, res, next){
 
 // Send notification message to private group chat 
 router.get('/Notify', function(req, res, next){
-  console.log("Sending msg to WA")
   client.sendMessage("120363147865391832@g.us", 
-  req.query.msg).then(e =>{ 
-     console.log(e)
-     res.send('Success')
-}
-)
+  req.query.msg).then(e => res.send('Success'))
 });
 
-
+120363147865391832@g.us
 router.post('/PowerPlugs', function(req, res, next) {
   try {
     console.log(req.body);
@@ -109,7 +103,7 @@ function sendCodes(plugcode) {
       '1': '4478259',
       '2': '4478403',
       '3': '4478723',
-      '4': '5574993',
+      '4': '5575761',
       '5': '5571921',
       '6': '5575953',
     }
@@ -118,7 +112,7 @@ function sendCodes(plugcode) {
       '1': '4478268',
       '2': '4478412',
       '3': '4478732',
-      '4': '5574996',
+      '4': '5575764',
       '5': '5571924',
       '6': '5575956',
     }
@@ -126,5 +120,3 @@ function sendCodes(plugcode) {
     if (outletStatus == 1) plugcode = powerOnMap[outletID];
     return plugcode;
   }
-
-  module.exports = router;

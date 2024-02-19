@@ -22,6 +22,7 @@ client.on('qr', qr => {
 
 client.on('ready', () => {
     console.log('Client is ready!');
+    client.getChats().then(e =>  console.log(e))
 });
 
 client.on('auth_failure', msg => {
