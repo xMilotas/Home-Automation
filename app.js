@@ -34,5 +34,5 @@ app.use(function (req, res, next) {
 
 var port = 8080;
 app.listen(port, function() {
-  console.log('Server runnning on Port: ' + port);
+  console.log('Server running on Port: ' + port);
 });

@@ -4,8 +4,9 @@ var url = require('url');
 const {exec} = require('child_process');
 const client = require('./whatsapp_client')
 
-
-module.exports = router;
+// require routes
+var tpRoutes = require('./tp/')
+router.use('/tp', tpRoutes)
 
 var spotifyActive = 1;
 var bundesligaActive = 1;
@@ -120,3 +121,5 @@ function sendCodes(plugcode) {
     if (outletStatus == 1) plugcode = powerOnMap[outletID];
     return plugcode;
   }
+
+  module.exports = router;
