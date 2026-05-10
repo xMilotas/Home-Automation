@@ -93,7 +93,7 @@ function triggerAllOutlets(
     if (index >= outletIds.length) {
       clearInterval(repeat)
     }
-  }, 350)
+  }, 1200)
 }
 
 function startOutletTimer(
