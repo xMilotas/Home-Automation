@@ -11,8 +11,6 @@
   "dependencies": {
     "body-parser": "*",
     "express": "*",
-    "qrcode-terminal": "*",
-    "whatsapp-web.js": "*",
     "node-schedule": "*",
     "wretch": "^1.7.4"
   }
