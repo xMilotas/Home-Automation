@@ -12,12 +12,12 @@ router.use('/tp', tpRoutes)
 const activeTimers = new Map()
 
 // RF configuration
-const RF_REPEAT_INTERVAL = 15
+const RF_REPEAT_INTERVAL = 200
 const RF_TRANSMIT_DURATION = 1200
 
 router.post(
   '/PowerPlugs',
-  async function(req, res, next) {
+  async function (req, res, next) {
     try {
       const {
         outletID,
@@ -38,7 +38,7 @@ router.post(
       }
 
       // Timer handling
-      if (timer){
+      if (timer) {
         startOutletTimer(
           outletID,
           outletStatus,
@@ -157,20 +157,12 @@ function sendCodes(plugcode) {
   let pulseLength = 185
 
   // Special pulse length
-  if (
-    plugcode === '5575761' ||
-    plugcode === '5575764'
-  ) {
-    pulseLength = 301
+  if (String(plugcode).startsWith('5')) {
+    pulseLength = 301;
   }
 
   const command =
     `sudo ./codesend ${plugcode} -l ${pulseLength}`
-
-  console.log(
-    '[RF SEND]',
-    command
-  )
 
   const startTime = Date.now()
 
@@ -183,6 +175,7 @@ function sendCodes(plugcode) {
         )
       }
     })
+    console.log('[RF SEND]', command)
 
     const elapsed =
       Date.now() - startTime
