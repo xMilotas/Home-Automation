@@ -19,7 +19,7 @@ export const outlets: Outlet[] = [
     },
     {
         id: 4,
-        name: 'Schlitten',
-        icon: icons.power
+        name: 'Schreibtisch',
+        icon: icons.desk
     }
 ]
