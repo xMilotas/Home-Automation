@@ -19,7 +19,7 @@ export const outlets: Outlet[] = [
     },
     {
         id: 4,
-        name: 'Schreibtisch',
+        name: 'Schreibtisch Annina',
         icon: icons.desk
     }
 ]
