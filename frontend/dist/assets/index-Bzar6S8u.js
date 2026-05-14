@@ -104,7 +104,7 @@
         rx="0.8"
       />
     </svg>
-  `},t=[{id:1,name:`Wohnzimmer groß`,icon:e.light},{id:2,name:`Wohnzimmer klein`,icon:e.light},{id:3,name:`Schlafzimmer`,icon:e.bedroom},{id:4,name:`Schreibtisch Annina`,icon:e.desk}];async function n(e,t,n){try{return await fetch(`/api/PowerPlugs`,{method:`POST`,headers:{"Content-Type":`application/json`},body:JSON.stringify({outletID:e,outletStatus:t,timer:n??!1})}),!0}catch(e){return console.error(e),!1}}function r(e){let t=document.querySelector(`#toast`);t&&(t.textContent=e,t.classList.add(`toast-visible`),setTimeout(()=>{t.classList.remove(`toast-visible`)},2e3))}async function i(e,t,i){let a=await n(e,t,i);return r(a?`Befehl gesendet`:`Fehler beim Senden`),a}var a=null;function o(){return{timerSheet:document.querySelector(`#timer-sheet`),title:document.querySelector(`#timer-title`),input:document.querySelector(`#custom-minutes`)}}function s(e){let{timerSheet:n,title:r}=o();a=e;let i=t.find(t=>t.id===e);r&&i&&(r.textContent=i.name),n?.classList.remove(`hidden`),requestAnimationFrame(()=>{n?.classList.add(`timer-sheet-visible`)})}function c(){let{timerSheet:e}=o();e?.classList.remove(`timer-sheet-visible`),setTimeout(()=>{e?.classList.add(`hidden`)},220)}function l(){document.querySelector(`#close-timer`)?.addEventListener(`click`,c),document.querySelector(`.timer-sheet-backdrop`)?.addEventListener(`click`,c),document.querySelectorAll(`.timer-option`).forEach(e=>{e.addEventListener(`click`,async()=>{if(!a)return;let t=Number(e.dataset.minutes);await i(a,1,t),c()})}),document.querySelector(`#start-custom-timer`)?.addEventListener(`click`,async()=>{if(!a)return;let{input:e}=o(),t=Number(e?.value);if(!t||t<1){r(`Ungültiger Timer`);return}await i(a,1,t),c()})}function u(){document.addEventListener(`click`,async e=>{let t=e.target.closest(`button`);if(!t)return;let n=t.dataset.action;if(n===`power`){let e=Number(t.dataset.id),n=Number(t.dataset.status);t.disabled=!0,await i(e,n),setTimeout(()=>{t.disabled=!1},500)}n===`timer`&&s(Number(t.dataset.id))}),document.querySelector(`#good-night-button`)?.addEventListener(`click`,async()=>{await i(6,0)})}function d(t){return`
+  `},t=[{id:1,name:`Wohnzimmer groß`,icon:e.light},{id:2,name:`Wohnzimmer klein`,icon:e.light},{id:3,name:`Schlafzimmer`,icon:e.bedroom},{id:4,name:`Schreibtisch Annina`,icon:e.desk}];async function n(e,t,n){try{return await fetch(`/api/PowerPlugs`,{method:`POST`,headers:{"Content-Type":`application/json`},body:JSON.stringify({outletID:e,outletStatus:t,timer:n??!1})}),!0}catch(e){return console.error(e),!1}}async function r(){let e=await fetch(`/api/PowerPlugs/timers`);if(!e.ok)throw Error(`Failed to fetch timers`);return e.json()}function i(e){let t=document.querySelector(`#toast`);t&&(t.textContent=e,t.classList.add(`toast-visible`),setTimeout(()=>{t.classList.remove(`toast-visible`)},2e3))}async function a(e,t,r){let a=await n(e,t,r);return i(a?`Befehl gesendet`:`Fehler beim Senden`),a}var o=new Map;function s(e){let t=Math.floor(e/60),n=e%60;return`${t}:${String(n).padStart(2,`0`)}`}function c(e){return document.querySelector(`[data-timer-display="${e}"]`)}function l(e,t){let n=c(e);n&&(n.innerHTML=t)}function u(t,n){let r=o.get(t);r&&clearInterval(r),l(t,s(n));let i=window.setInterval(()=>{if(n--,n<=0){clearInterval(i),o.delete(t),l(t,e.timer);return}l(t,s(n))},1e3);o.set(t,i)}function d(e,t){u(e,t*60)}var f=null;function p(){return{timerSheet:document.querySelector(`#timer-sheet`),title:document.querySelector(`#timer-title`),input:document.querySelector(`#custom-minutes`)}}function m(e){let{timerSheet:n,title:r}=p();f=e;let i=t.find(t=>t.id===e);r&&i&&(r.textContent=i.name),n?.classList.remove(`hidden`),requestAnimationFrame(()=>{n?.classList.add(`timer-sheet-visible`)})}function h(){let{timerSheet:e}=p();e?.classList.remove(`timer-sheet-visible`),setTimeout(()=>{e?.classList.add(`hidden`)},220)}function g(){document.querySelector(`#close-timer`)?.addEventListener(`click`,h),document.querySelector(`.timer-sheet-backdrop`)?.addEventListener(`click`,h),document.querySelectorAll(`.timer-option`).forEach(e=>{e.addEventListener(`click`,async()=>{if(!f)return;let t=Number(e.dataset.minutes);await a(f,1,t)&&d(f,t),h()})}),document.querySelector(`#start-custom-timer`)?.addEventListener(`click`,async()=>{if(!f)return;let{input:e}=p(),t=Number(e?.value);if(!t||t<1){i(`Ungültiger Timer`);return}await a(f,1,t)&&d(f,t),h()})}function _(){document.addEventListener(`click`,async e=>{let t=e.target.closest(`button`);if(!t)return;let n=t.dataset.action;if(n===`power`){let e=Number(t.dataset.id),n=Number(t.dataset.status);t.disabled=!0,await a(e,n),setTimeout(()=>{t.disabled=!1},500)}n===`timer`&&m(Number(t.dataset.id))}),document.querySelector(`#good-night-button`)?.addEventListener(`click`,async()=>{await a(6,0)})}function v(t){return`
     <article class="outlet-card">
       <div class="outlet-header">
         <div class="outlet-icon">
@@ -142,18 +142,22 @@
           data-action="timer"
           data-id="${t.id}"
         >
-          ${e.timer}
+          <span
+            data-timer-display="${t.id}"
+          >
+            ${e.timer}
+          </span>
         </button>
       </div>
     </article>
-  `}function f(t){return`
+  `}function y(t){return`
     <main class="app-shell">
       <header class="topbar">
         <h1>Steckdosen</h1>
       </header>
 
       <section class="outlet-grid">
-        ${t.map(d).join(``)}
+        ${t.map(v).join(``)}
       </section>
 
       <section class="scene-section">
@@ -245,4 +249,4 @@
         </div>
       </div>
     </main>
-  `}var p=document.querySelector(`#app`);if(!p)throw Error(`App container not found`);p.innerHTML=f(t),u(),l();
+  `}async function b(){try{let e=await r();for(let t of e)u(t.outletID,t.remainingSeconds)}catch(e){console.error(e)}}var x=document.querySelector(`#app`);if(!x)throw Error(`App container not found`);x.innerHTML=y(t),_(),g(),b();

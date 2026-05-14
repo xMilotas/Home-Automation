@@ -2,7 +2,7 @@ import type { Outlet } from '../types/outlet'
 import { icons } from '../icons'
 
 function renderOutletCard(outlet: Outlet) {
-    return `
+  return `
     <article class="outlet-card">
       <div class="outlet-header">
         <div class="outlet-icon">
@@ -40,7 +40,11 @@ function renderOutletCard(outlet: Outlet) {
           data-action="timer"
           data-id="${outlet.id}"
         >
-          ${icons.timer}
+          <span
+            data-timer-display="${outlet.id}"
+          >
+            ${icons.timer}
+          </span>
         </button>
       </div>
     </article>
@@ -48,7 +52,7 @@ function renderOutletCard(outlet: Outlet) {
 }
 
 export function renderApp(outlets: Outlet[]) {
-    return `
+  return `
     <main class="app-shell">
       <header class="topbar">
         <h1>Steckdosen</h1>
@@ -115,7 +119,7 @@ export function renderApp(outlets: Outlet[]) {
 
           <div class="timer-options">
             ${[5, 10, 15, 30]
-            .map((minutes) => `
+      .map((minutes) => `
                 <button
                   class="timer-option"
                   data-minutes="${minutes}"
@@ -124,7 +128,7 @@ export function renderApp(outlets: Outlet[]) {
                   <small>Schnellwahl</small>
                 </button>
               `)
-            .join('')}
+      .join('')}
           </div>
 
           <div class="custom-timer">

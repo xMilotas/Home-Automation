@@ -25,3 +25,22 @@ export async function sendPowerRequest(
     return false
   }
 }
+
+export type ActiveTimer = {
+  outletID: number
+  remainingSeconds: number
+}
+
+export async function fetchTimers() {
+  const response = await fetch(
+    '/api/PowerPlugs/timers'
+  )
+
+  if (!response.ok) {
+    throw new Error(
+      'Failed to fetch timers'
+    )
+  }
+
+  return response.json() as Promise<ActiveTimer[]>
+}

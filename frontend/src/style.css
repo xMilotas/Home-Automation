@@ -607,3 +607,10 @@ button {
 button:disabled {
   opacity: 0.6;
 }
+
+[data-timer-display] {
+  min-width: 42px;
+  display: inline-flex;
+  justify-content: center;
+  font-variant-numeric: tabular-nums;
+}

@@ -8,6 +8,8 @@ import { renderApp } from './ui/render'
 import { initializeTimerSheet }
   from './ui/timerSheet'
 
+import { initTimers } from './ui/timerInit'
+
 const app =
   document.querySelector<HTMLDivElement>('#app')
 
@@ -19,3 +21,4 @@ app.innerHTML = renderApp(outlets)
 
 initializeOutletHandlers()
 initializeTimerSheet()
+initTimers()

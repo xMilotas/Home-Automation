@@ -1,6 +1,7 @@
 import { outlets } from '../data/outlets'
 import { sendRequest } from '../services/powerService'
 import { showToast } from './toast'
+import { startCountdown } from './timerCountdown'
 
 let selectedOutletId: number | null = null
 
@@ -82,11 +83,19 @@ export function initializeTimerSheet() {
                         button.dataset.minutes
                     )
 
-                    await sendRequest(
-                        selectedOutletId,
-                        1,
-                        minutes
-                    )
+                    const success =
+                        await sendRequest(
+                            selectedOutletId,
+                            1,
+                            minutes
+                        )
+
+                    if (success) {
+                        startCountdown(
+                            selectedOutletId,
+                            minutes
+                        )
+                    }
 
                     closeTimerSheet()
                 }
@@ -109,11 +118,19 @@ export function initializeTimerSheet() {
                 return
             }
 
+            const success =
             await sendRequest(
                 selectedOutletId,
                 1,
                 value
             )
+
+            if (success) {
+            startCountdown(
+                selectedOutletId,
+                value
+            )
+            }
 
             closeTimerSheet()
         })

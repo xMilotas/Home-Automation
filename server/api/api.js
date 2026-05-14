@@ -15,6 +15,39 @@ const activeTimers = new Map()
 const RF_REPEAT_INTERVAL = 200
 const RF_TRANSMIT_DURATION = 1200
 
+router.get(
+  '/PowerPlugs/timers',
+  function (req, res) {
+
+    const timers = []
+
+    for (const [
+      outletID,
+      timerData
+    ] of activeTimers.entries()) {
+
+      const remainingMs =
+        timerData.endTime - Date.now()
+
+      const remainingSeconds =
+        Math.max(
+          0,
+          Math.ceil(
+            remainingMs / 1000
+          )
+        )
+
+      timers.push({
+        outletID,
+        remainingSeconds
+      })
+    }
+
+    res.json(timers)
+  }
+)
+
+
 router.post(
   '/PowerPlugs',
   async function (req, res, next) {
@@ -101,16 +134,15 @@ function startOutletTimer(
   outletStatus,
   minutes
 ) {
-  // Replace existing timer
-  if (
-    activeTimers.has(outletID)
-  ) {
+  const existingTimer =
+    activeTimers.get(outletID)
+
+  if (existingTimer) {
     clearTimeout(
-      activeTimers.get(outletID)
+      existingTimer.timeout
     )
   }
 
-  // Turn outlet on immediately
   sendCodes(
     readCodes(
       outletID,
@@ -121,6 +153,12 @@ function startOutletTimer(
   console.log(
     `[Timer Started] Outlet ${outletID} -> ${minutes} min`
   )
+
+  const durationMs =
+    minutes * 60000
+
+  const endTime =
+    Date.now() + durationMs
 
   const timeout = setTimeout(() => {
     sendCodes(
@@ -137,11 +175,14 @@ function startOutletTimer(
     console.log(
       `[Timer Finished] Outlet ${outletID}`
     )
-  }, minutes * 60000)
+  }, durationMs)
 
   activeTimers.set(
     outletID,
-    timeout
+    {
+      timeout,
+      endTime
+    }
   )
 }
 
